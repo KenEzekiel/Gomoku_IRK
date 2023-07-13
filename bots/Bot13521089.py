@@ -149,47 +149,47 @@ class Bot13521089(object):
 
         return best + 2, x, y
     
-    def weight_player(self, board):
-        best = 0
-        temp = [[0,0], 0]
-        # Direction dimulai dari atas terus clockwise
-        for i in self.list_coord:
-            # Init direction
-            direction = [0 for i in range(8)]
-            # Pick a point
-            curr = i
-            # Recursion on the point
-            point_coord, move, count = self.rec_get(direction, curr, board, -1)
+    # def weight_player(self, board):
+    #     best = 0
+    #     temp = [[0,0], 0]
+    #     # Direction dimulai dari atas terus clockwise
+    #     for i in self.list_coord:
+    #         # Init direction
+    #         direction = [0 for i in range(8)]
+    #         # Pick a point
+    #         curr = i
+    #         # Recursion on the point
+    #         point_coord, move, count = self.rec_get(direction, curr, board, -1)
 
-            if count > best:
-                temp = [point_coord, move]
-                best = count
+    #         if count > best:
+    #             temp = [point_coord, move]
+    #             best = count
         
-        adj = [[1,0], [1,1], [0,1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
-        x = temp[0][0] + adj[temp[1]][0]
-        y = temp[0][1] + adj[temp[1]][1]
-        return int(best + 5 - (len(self.list_coord))/5), x,y
+    #     adj = [[1,0], [1,1], [0,1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]]
+    #     x = temp[0][0] + adj[temp[1]][0]
+    #     y = temp[0][1] + adj[temp[1]][1]
+    #     return int(best + 5 - (len(self.list_coord))/5), x,y
 
 
-    def rec_get(self, direction, point_coord, board, last_dir):
-        adj = [self.to_number(point_coord[0]+1 % board.height, point_coord[1] % board.width, board), 
-               self.to_number(point_coord[0]+1 % board.height, point_coord[1]+1 % board.width, board), 
-               self.to_number(point_coord[0] % board.height, point_coord[1]+1 % board.width, board), 
-               self.to_number(point_coord[0]-1 % board.height, point_coord[1]+1 % board.width, board), 
-               self.to_number(point_coord[0]-1 % board.height, point_coord[1] % board.width, board), 
-               self.to_number(point_coord[0]-1 % board.height, point_coord[1]-1 % board.width, board), 
-               self.to_number(point_coord[0] % board.height, point_coord[1]-1 % board.width, board), 
-               self.to_number(point_coord[0]+1 % board.height, point_coord[1]-1 % board.width, board)]
-        max_idx = 0
-        found = False
-        rev = [4, 5, 6, 7, 0, 1, 2, 3]
-        for j in range(len(adj)):
-            if adj[j] in board.states:
-                if board.states[adj[j]] == self.player and rev[j] != last_dir:
-                    direction[j] += 1
-                    found = True
-                    max_idx = direction.index(max(direction))
-        if found:
-            return self.rec_get(direction, self.to_coord(adj[max_idx], board), board, max_idx)
-        else:
-            return point_coord, max_idx, direction[max_idx]
+    # def rec_get(self, direction, point_coord, board, last_dir):
+    #     adj = [self.to_number(point_coord[0]+1 % board.height, point_coord[1] % board.width, board), 
+    #            self.to_number(point_coord[0]+1 % board.height, point_coord[1]+1 % board.width, board), 
+    #            self.to_number(point_coord[0] % board.height, point_coord[1]+1 % board.width, board), 
+    #            self.to_number(point_coord[0]-1 % board.height, point_coord[1]+1 % board.width, board), 
+    #            self.to_number(point_coord[0]-1 % board.height, point_coord[1] % board.width, board), 
+    #            self.to_number(point_coord[0]-1 % board.height, point_coord[1]-1 % board.width, board), 
+    #            self.to_number(point_coord[0] % board.height, point_coord[1]-1 % board.width, board), 
+    #            self.to_number(point_coord[0]+1 % board.height, point_coord[1]-1 % board.width, board)]
+    #     max_idx = 0
+    #     found = False
+    #     rev = [4, 5, 6, 7, 0, 1, 2, 3]
+    #     for j in range(len(adj)):
+    #         if adj[j] in board.states:
+    #             if board.states[adj[j]] == self.player and rev[j] != last_dir:
+    #                 direction[j] += 1
+    #                 found = True
+    #                 max_idx = direction.index(max(direction))
+    #     if found:
+    #         return self.rec_get(direction, self.to_coord(adj[max_idx], board), board, max_idx)
+    #     else:
+    #         return point_coord, max_idx, direction[max_idx]
